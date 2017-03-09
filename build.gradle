@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "23.0.3"
+
+    signingConfigs {
+        // android.keystore create command line:
+        //  keytool -genkey -v -keystore android.keystore -alias apollo-app-knife -keyalg RSA -keysize 2048 -validity 10000
+        releaseConfig {
+            keyAlias 'apollo-app-knife'
+            keyPassword 'apollo-app-knife-hello-kwmw'
+            storeFile file('android.keystore')
+            storePassword 'apollo-app-knife-hello-kwmw'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.uc.test.audiofocustester"
+        minSdkVersion 15
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+        setProperty("archivesBaseName", "音频焦点测试_v$versionName")
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
+        }
+        debug {
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

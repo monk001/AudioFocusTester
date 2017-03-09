@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">音频焦点测试</string>
+    <string name="testa">测试 A</string>
+    <string name="testb">测试 B</string>
+    <string name="clear_log">清空日志</string>
+</resources>
