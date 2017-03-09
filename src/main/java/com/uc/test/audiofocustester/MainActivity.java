@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
     private ListBox<String> mLog;
     private Button mTestABtn;
     private Button mTestBBtn;
+    private Button mFullScreenBtn;
     private Button mClearLogBtn;
 
     private AudioFocusTest mAudioFocusTestA;
@@ -44,10 +45,26 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
+        FullScreenHolder.setActivity(this);
+
         mLog = (ListBox<String>) findViewById(R.id.log_view);
         mTestABtn = (Button) findViewById(R.id.testa_btn);
         mTestBBtn = (Button) findViewById(R.id.testb_btn);
+        mFullScreenBtn = (Button) findViewById(R.id.fullscreen_btn);
         mClearLogBtn = (Button) findViewById(R.id.clear_log_btn);
+
+        mFullScreenBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (FullScreenHolder.acquired()) {
+                    FullScreenHolder.release();
+                } else {
+                    FullScreenHolder.acquire(FullScreenHolder.SCREEN_ORIENTATION_SENSOR);
+                }
+                mFullScreenBtn.setText(getResources().getString(
+                        FullScreenHolder.acquired() ? R.string.exit_fullscreen : R.string.enter_fullscreen));
+            }
+        });
 
         mClearLogBtn.setOnClickListener(new View.OnClickListener() {
             @Override
