@@ -3,14 +3,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.3'
     }
 }
 
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 24
     buildToolsVersion '25.0.0'
 
     signingConfigs {
@@ -26,10 +26,10 @@ android {
 
     defaultConfig {
         applicationId "com.uc.test.audiofocustester"
-        minSdkVersion 15
-        targetSdkVersion 19
+        minSdkVersion 14
+        targetSdkVersion 24
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
         setProperty("archivesBaseName", "音频焦点测试_v$versionName")
     }
 

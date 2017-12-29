@@ -58,15 +58,16 @@ class AudioFocusTest {
 
             mLogger.i(msg);
 
-            if (callbackOnMainLooper)
+            if (callbackOnMainLooper) {
+                Toast.makeText(mContext, MSG_PRE + "音频焦点 " + msg, Toast.LENGTH_SHORT).show();
+            } else {
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(mContext, MSG_PRE + msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, MSG_PRE + "音频焦点 " + msg, Toast.LENGTH_SHORT).show();
                     }
                 });
-            else
-                Toast.makeText(mContext, MSG_PRE + "音频焦点 " + msg, Toast.LENGTH_SHORT).show();
+            }
 
             if (mIsTesting)
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {

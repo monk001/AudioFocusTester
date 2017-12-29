@@ -2,6 +2,7 @@
 
 package com.uc.test.audiofocustester;
 
+import android.Manifest;
 import android.app.Activity;
 import android.graphics.Color;
 import android.nfc.Tag;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -33,7 +35,7 @@ public class MainActivity extends Activity {
         a.setTextColor(Color.GREEN);
 
         b.setEnabled(true);
-        b.setText(getResources().getString(a == mTestABtn ? R.string.testb :  R.string.testa));
+        b.setText(getResources().getString(a == mTestABtn ? R.string.testb : R.string.testa));
         b.setTextColor(Color.BLACK);
     }
 
@@ -109,6 +111,15 @@ public class MainActivity extends Activity {
 
         mAudioFocusTestA = new AudioFocusTestA(this, mLogger);
         mAudioFocusTestB = new AudioFocusTestB(this, mLogger);
+
+        if (!AndroidPermission.requestPermissions(this, Manifest.permission.READ_PHONE_STATE))
+            mLog.add("获取权限" + (AndroidPermission.havePermission(this, Manifest.permission.READ_PHONE_STATE) ? "成功" : "失败"));
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        AndroidPermission.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mLog.add("获取权限" + (AndroidPermission.havePermission(this, Manifest.permission.READ_PHONE_STATE) ? "成功" : "失败"));
     }
 
     private long mPreBackPressedTime = 0;
