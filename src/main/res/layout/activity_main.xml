@@ -34,6 +34,13 @@
             android:text="@string/enter_fullscreen"/>
 
         <Button
+            android:id="@+id/popwin_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/popwin"/>
+
+        <Button
             android:id="@+id/clear_log_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

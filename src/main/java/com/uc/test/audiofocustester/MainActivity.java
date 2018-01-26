@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
     private Button mTestBBtn;
     private Button mFullScreenBtn;
     private Button mClearLogBtn;
+    private Button mPopWinBtn;
 
     private AudioFocusTest mAudioFocusTestA;
     private AudioFocusTest mAudioFocusTestB;
@@ -54,6 +55,9 @@ public class MainActivity extends Activity {
         mTestBBtn = (Button) findViewById(R.id.testb_btn);
         mFullScreenBtn = (Button) findViewById(R.id.fullscreen_btn);
         mClearLogBtn = (Button) findViewById(R.id.clear_log_btn);
+        mPopWinBtn = (Button) findViewById(R.id.popwin_btn);
+
+        mPopWinBtn.setOnClickListener(mOnPopWinClickListener);
 
         mFullScreenBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +118,18 @@ public class MainActivity extends Activity {
 
         if (!AndroidPermission.requestPermissions(this, Manifest.permission.READ_PHONE_STATE))
             mLog.add("获取权限" + (AndroidPermission.havePermission(this, Manifest.permission.READ_PHONE_STATE) ? "成功" : "失败"));
+
+        BpPopWindowService.init(this, new BpPopWindowService.Listener() {
+            @Override
+            public void onConnected() {
+                mPopWinBtn.setEnabled(true);
+            }
+
+            @Override
+            public void onDisConnected() {
+                mPopWinBtn.setEnabled(false);
+            }
+        });
     }
 
     public void onRequestPermissionsResult(int requestCode,
@@ -135,4 +151,13 @@ public class MainActivity extends Activity {
             android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
+
+    private View.OnClickListener mOnPopWinClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mPopWinBtn.setText(
+                    getResources().getString(
+                            BpPopWindowService.togglePopWindow() ? R.string.popwin_close : R.string.popwin));
+        }
+    };
 }

@@ -2,7 +2,9 @@
     <string name="app_name">音频焦点测试</string>
     <string name="testa">测试 A</string>
     <string name="testb">测试 B</string>
-    <string name="enter_fullscreen">进入全屏</string>
-    <string name="exit_fullscreen">退出全屏</string>
+    <string name="enter_fullscreen">全屏</string>
+    <string name="exit_fullscreen">非全屏</string>
+    <string name="popwin">弹窗</string>
+    <string name="popwin_close">关闭弹窗</string>
     <string name="clear_log">清空日志</string>
 </resources>
