@@ -4,6 +4,8 @@ package com.uc.test.audiofocustester;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -155,9 +157,29 @@ public class MainActivity extends Activity {
     private View.OnClickListener mOnPopWinClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            mPopWinBtn.setText(
-                    getResources().getString(
-                            BpPopWindowService.togglePopWindow() ? R.string.popwin_close : R.string.popwin));
+            if (SystemAlertWindowPermission.isOpAllowed(getApplicationContext())) {
+                mPopWinBtn.setText(
+                        getResources().getString(
+                                BpPopWindowService.togglePopWindow() ? R.string.popwin_close : R.string.popwin));
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setCancelable(true);
+                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setTitle("尚未配置悬浮窗权限");
+                builder.setMessage("弹窗需要设置悬浮窗权限（有些手机设置后需要重启应用才能生效，比如小米）");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        SystemAlertWindowPermission.showPermisionGuide(MainActivity.this);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+            }
         }
     };
 }

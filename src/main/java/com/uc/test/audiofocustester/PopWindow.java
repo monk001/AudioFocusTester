@@ -46,7 +46,14 @@ class PopWindow {
         return true;
     }
 
-    private static final int sWindowType = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+    private static final int sWindowType;
+
+    static {
+        if (SystemAlertWindowPermission.canUseAlertWindowWithToastType())
+            sWindowType = WindowManager.LayoutParams.TYPE_TOAST;
+        else
+            sWindowType = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+    }
 
     private static WindowManager.LayoutParams createLayoutParams() {
         WindowManager.LayoutParams layoutParams;
